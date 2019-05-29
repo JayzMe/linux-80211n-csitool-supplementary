@@ -33,7 +33,8 @@ int main(int argc, char** argv)
 	struct sockaddr_nl proc_addr, kern_addr;	// addrs for recv, send, bind
 	struct cn_msg *cmsg;
 	char buf[4096];
-	int ret;
+	char sendbuf = [ 1, 2, 3, 4 ];
+	int ret, err;
 	unsigned short l, l2;
 	int count = 0;
 
@@ -72,7 +73,10 @@ int main(int argc, char** argv)
 
 	/* Set up the "caught_signal" function as this program's sig handler */
 	signal(SIGINT, caught_signal);
-
+	/* Test the connector callback */
+	err = iwl_netlink_send(sock_fd, &count, sizeof(sendbuf));
+	if(err == -1)
+		printf("Failed to send!\n");
 	/* Poll socket forever waiting for a message */
 	while (1)
 	{
