@@ -33,7 +33,7 @@ int main(int argc, char** argv)
 	struct sockaddr_nl proc_addr, kern_addr;	// addrs for recv, send, bind
 	struct cn_msg *cmsg;
 	char buf[4096];
-	char sendbuf = [ 1, 2, 3, 4 ];
+	char sendbuf[4] = {1, 2, 3, 4};
 	int ret, err;
 	unsigned short l, l2;
 	int count = 0;
