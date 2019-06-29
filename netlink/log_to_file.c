@@ -17,7 +17,7 @@
 
 int sock_fd = -1;							// the socket
 FILE* out = NULL;
-
+const u_char sendbuf[4] = {14, 16, 18, 20};
 void check_usage(int argc, char** argv);
 
 FILE* open_file(char* filename, char* spec);
@@ -33,7 +33,7 @@ int main(int argc, char** argv)
 	struct sockaddr_nl proc_addr, kern_addr;	// addrs for recv, send, bind
 	struct cn_msg *cmsg;
 	char buf[4096];
-	char sendbuf[4] = {1, 2, 3, 4};
+	
 	int ret, err;
 	unsigned short l, l2;
 	int count = 0;
@@ -74,7 +74,7 @@ int main(int argc, char** argv)
 	/* Set up the "caught_signal" function as this program's sig handler */
 	signal(SIGINT, caught_signal);
 	/* Test the connector callback */
-	err = iwl_netlink_send(sock_fd, &count, sizeof(sendbuf));
+	err = iwl_netlink_send(sock_fd, sendbuf, sizeof(sendbuf));
 	if(err == -1)
 		printf("Failed to send!\n");
 	/* Poll socket forever waiting for a message */

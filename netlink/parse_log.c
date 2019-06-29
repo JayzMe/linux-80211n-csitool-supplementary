@@ -46,7 +46,6 @@ int main(int argc, char** argv)
 		fread(buf, l, sizeof(*buf), in);
 
 		printf("Entry size=%d, code=0x%X\n", l, buf[0]);
-
 		/* Read the next entry size */
 		fread(&l2, 1, sizeof(unsigned short), in);
 		l = ntohs(l2);
